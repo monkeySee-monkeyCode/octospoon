@@ -88,6 +88,14 @@ broken_sasl_auth_clients = yes
 smtpd_sender_restrictions = reject_unknown_sender_domain, reject_sender_login_mismatch
 smtpd_sender_login_maps = $virtual_mailbox_maps
 
+#########Milters
+
+
+milter_default_action = accept
+milter_connect_macros = j {daemon_name} v {if_name} _
+non_smtpd_milters = $smtpd_milters
+smtpd_milters = unix:/spamass/spamass.sock unix:/clamav/clamav-milter.ctl unix:/opendkim/opendkim.sock
+
 
 
 
