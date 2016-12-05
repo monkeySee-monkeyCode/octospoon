@@ -59,10 +59,10 @@ sudo mkdir -p /var/spool/postfix/opendkim
 sudo chown opendkim:root /var/spool/postfix/opendkim
 #sudo usermod -G opendkim postfix
 
-sudo chmod +x ~/aliasing.sh
-sudo chmod +x ~/reconfig.sh
-sudo ./aliasing.sh
-sudo ./reconfig.sh
+sudo chmod +x ~/octospoon/aliasing.sh
+sudo chmod +x ~/octospoon/reconfig.sh
+sudo ./octospoon/aliasing.sh
+sudo ./octospoon/reconfig.sh
 
 sudo service postfix restart
 sudo service dovecot restart
