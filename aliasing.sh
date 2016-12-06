@@ -7,6 +7,17 @@ sudo echo "root: webmaster@"$user_domain"" >> /etc/aliases
 sudo echo "www-data: webmaster@"$user_domain"" >> /etc/aliases
 sudo newaliases
 
+echo "generating DKIM"
+opendkim-genkey -r -h sha256 -d $user_domain -s mail
+sudo mv mail.private mail
+sudo touch KeyTable
+sudo touch SigningTable
+sudo touch TrustedHosts
+sudo chown -R opendkim:opendkim /etc/opendkim
+sudo mkdir -p /var/spool/postfix/opendkim
+sudo chown opendkim:root /var/spool/postfix/opendkim
+
+
 
 sudo touch /etc/postfix/virtual-mailbox-domains
 sudo echo ""$user_domain"      OK" >> /etc/postfix/virtual-mailbox-domains
@@ -33,6 +44,6 @@ sudo echo "hostmaster@"$user_domain"   webmaster@"$user_domain"" >> /etc/postfix
 
 sudo postmap /etc/postfix/virtual
 
-sudo groupadd -g 5001 vmail
-sudo useradd -g vmail -u 5001 vmail -d /var/mail/vmail -m
+
+#sudo usermod -G opendkim postfix
 
