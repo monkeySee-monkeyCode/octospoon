@@ -26,19 +26,22 @@ sa-update
 sudo chown -R spamd:spamd /var/lib/spamassassin
 sudo mkdir -p /var/lib/spamassassin/.spamassassin
 sudo chown spamd:spamd /var/lib/spamassassin/.spamassassin
-usermod -a -G spamd spamass-milter
-mkdir -p /var/lib/spamassassin/.razor
-mkdir -p /var/lib/spamassassin/.pyzor
-mkdir -p /var/lib/spamassassin/.spamassassin
+sudo usermod -a -G spamd spamass-milter
+sudo mkdir -p /var/lib/spamassassin/.razor
+sudo mkdir -p /var/lib/spamassassin/.pyzor
+sudo mkdir -p /var/lib/spamassassin/.spamassassin
 pyzor --homedir /var/lib/spamassassin/.pyzor discover
 razor-admin -home=/var/lib/spamassassin/.razor -register
 razor-admin -home=/var/lib/spamassassin/.razor -create
 razor-admin -home=/var/lib/spamassassin/.razor -discover
-chown -R spamd:spamd /var/lib/spamassassin
-mkdir -p /var/mail/vmail/sieve-before
-mkdir -p /var/mail/vmail/sieve-after
-chown -R vmail:vmail /var/mail/vmail/sieve-before
-chown -R vmail:vmail /var/mail/vmail/sieve-after
+sudo chown -R spamd:spamd /var/lib/spamassassin
+sudo groupadd -g 5001 vmail
+sudo useradd -g vmail -u 5001 vmail -d /var/mail/vmail -m
+
+sudo mkdir -p /var/mail/vmail/sieve-before
+sudo mkdir -p /var/mail/vmail/sieve-after
+sudo chown -R vmail:vmail /var/mail/vmail/sieve-before
+sudo chown -R vmail:vmail /var/mail/vmail/sieve-after
 
 
 
@@ -48,16 +51,7 @@ sudo aptitude install opendkim opendkim-tools
 sudo mkdir -p /etc/opendkim
 sudo chown opendkim:opendkim /etc/opendkim
 cd /etc/opendkim
-echo "generating DKIM"
-opendkim-genkey -r -h sha256 -d mail.yourdomain.com -s mail
-sudo mv mail.private mail
-sudo touch KeyTable
-sudo touch SigningTable
-sudo touch TrustedHosts
-sudo chown -R opendkim:opendkim /etc/opendkim
-sudo mkdir -p /var/spool/postfix/opendkim
-sudo chown opendkim:root /var/spool/postfix/opendkim
-#sudo usermod -G opendkim postfix
+
 
 sudo chmod +x ~/octospoon/aliasing.sh
 sudo chmod +x ~/octospoon/reconfig.sh
