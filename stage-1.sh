@@ -1,10 +1,7 @@
-sudo apt-get install aptitude
-suod apt-get install git
+sudo apt-get install postfix
 
-echo "installing postfix/dovecot mail stack -=SUDO=-"
-
-sudo aptitude mail-delivery-stack
 sudo aptitude install python-software-properties
 sudo add-apt-repository ppa:malte.swart/dovecot-2.2
+sudo apt-get install dovecot
 sudo aptitude update
 sudo aptitude upgrade
